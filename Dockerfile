@@ -3,6 +3,8 @@
 
 # Stage 1: Builder (TypeScript compilation only)
 FROM node:22-alpine AS builder
+# Patch OS packages for known CVEs (libssl3/libcrypto3)
+RUN apk upgrade --no-cache libssl3 libcrypto3
 WORKDIR /app
 
 # Copy tsconfig files for TypeScript compilation
@@ -25,6 +27,8 @@ RUN npx tsc -p tsconfig.build.json
 
 # Stage 2: Runtime (minimal dependencies)
 FROM node:22-alpine AS runtime
+# Patch OS packages for known CVEs (libssl3/libcrypto3)
+RUN apk upgrade --no-cache libssl3 libcrypto3
 WORKDIR /app
 
 # Install only essential runtime tools

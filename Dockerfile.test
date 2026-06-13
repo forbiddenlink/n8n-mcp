@@ -1,5 +1,7 @@
 # Quick test Dockerfile using pre-built files
 FROM node:22-alpine
+# Patch OS packages for known CVEs (libssl3/libcrypto3)
+RUN apk upgrade --no-cache libssl3 libcrypto3
 
 WORKDIR /app
 
